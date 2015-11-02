@@ -398,7 +398,7 @@ class Broker(broker.Broker):
 
         # For non-GTC orders we need to check if the order has expired.
         if not order.getGoodTillCanceled():
-            expired = bar_.getDateTime().date() > order.getAcceptedDateTime().date()
+            expired = bar_.getDateTime() > order.getAcceptedDateTime()
 
             # Cancel the order if it is expired.
             if expired:
@@ -415,7 +415,7 @@ class Broker(broker.Broker):
         if not order.getGoodTillCanceled():
             expired = False
             if self.__barFeed.getFrequency() >= pyalgotrade.bar.Frequency.DAY:
-                expired = bar_.getDateTime().date() >= order.getAcceptedDateTime().date()
+                expired = bar_.getDateTime() >= order.getAcceptedDateTime()
 
             # Cancel the order if it will expire in the next bar.
             if expired:
